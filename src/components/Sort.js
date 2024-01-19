@@ -1,10 +1,54 @@
-import React from 'react'
-import { useFilterContext } from '../context/filter_context'
-import { BsFillGridFill, BsList } from 'react-icons/bs'
-import styled from 'styled-components'
+import React from "react";
+import { useFilterContext } from "../context/filter_context";
+import { BsFillGridFill, BsList } from "react-icons/bs";
+import styled from "styled-components";
 const Sort = () => {
-  return <h4>sort </h4>
-}
+  const {
+    filter_products: products,
+    gridView,
+    setGridView,
+    setListView,
+    sort,
+    updateSort,
+  } = useFilterContext();
+  return (
+    <Wrapper>
+      <div className="btn-container">
+        <button
+          onClick={setGridView}
+          type="button"
+          className={gridView ? "active" : ""}
+        >
+          <BsFillGridFill />
+        </button>
+        <button
+          onClick={setListView}
+          type="button"
+          className={!gridView ? "active" : ""}
+        >
+          <BsList />
+        </button>
+      </div>
+      <p>{products.length}</p>
+      <hr />
+      <form action="">
+        <label htmlFor="sort">sort by </label>
+        <select
+          name="sort"
+          id="sort"
+          className="sort-input"
+          value={sort}
+          onChange={updateSort}
+        >
+          <option value="price-lowest">price (lowest)</option>
+          <option value="price-highest">price (highest)</option>
+          <option value="name-a">name (A-Z)</option>
+          <option value="name-z">name (Z-A)</option>
+        </select>
+      </form>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   display: grid;
@@ -12,6 +56,7 @@ const Wrapper = styled.section`
   align-items: center;
   margin-bottom: 2rem;
   column-gap: 2rem;
+
   @media (max-width: 576px) {
     display: grid;
     grid-template-columns: 1fr;
@@ -58,15 +103,18 @@ const Wrapper = styled.section`
   }
 
   .sort-input {
-    border-color: transparent;
+    border: 1px solid black;
+    border-radius: 2rem;
+    // border-color: transparent;
     font-size: 1rem;
     text-transform: capitalize;
     padding: 0.25rem 0.5rem;
+    margin: 0.25rem;
   }
   label {
     font-size: 1rem;
     text-transform: capitalize;
   }
-`
+`;
 
-export default Sort
+export default Sort;
